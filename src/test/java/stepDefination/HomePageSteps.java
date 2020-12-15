@@ -13,12 +13,12 @@ import cucumber.api.java.en.When;
 
 public class HomePageSteps extends page {
 
-	HomePage homepage= new HomePage();
+	static HomePage homepage= new HomePage();
 	
 	
 	@When ("^user launch Chrome browser$")
 	public void user_opens_browser() {
-		PageFactory.initElements(driver, this);
+		
 		page.initialization();
 		
 	} 

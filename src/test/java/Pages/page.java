@@ -42,6 +42,7 @@ public class page {
 	
 	public static void initialization()
 	{
+		jsx= (JavascriptExecutor) driver;  
 		
 		String browserName= prop.getProperty("browser");
 		System.out.println(browserName);

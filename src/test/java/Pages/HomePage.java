@@ -1,11 +1,17 @@
 package Pages;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,68 +24,69 @@ public class HomePage extends page {
 	@FindBy(id="FromTag")
 	private WebElement fromCity;
 	
-	@FindBy(id="DepartDate")
+	@FindBy(css="#FromDate")
 	private WebElement DepartDate;
 	
 	@FindBy(id="ToTag")
 	private WebElement toCity;
 	
-	@FindBy(xpath="//*[@class='.ui-datepicker-days-cell-over.selected']/a")
+	@FindBy(id="DepartDate")
 	private WebElement todayDate;
 	
-	@FindBy(id="i-datepicker-div")
+	@FindBy(id="ReturnDate")
 	private WebElement returnDate;
 	
 
 	@FindBy(id="SearchBtn")
 	private WebElement continueSearch;
 	
-	//WebDriverWait wait= new WebDriverWait(driver, 60);
 	
-	public HomePage()
-	{
-		PageFactory.initElements(driver, this);
-	}
-
+	
 	public void verifyUserLand() throws InterruptedException {
 		Thread.sleep(4000);
+		System.out.println("home page constructor called");
+		PageFactory.initElements(driver, this);
 		Assert.assertTrue("user not landed on clear trip page", driver.getTitle().contains("Booking"));
 		
 	}
 
-	public void userSearchesFlights() {
+	public void userSearchesFlights() throws InterruptedException {
 		System.out.println("Clicking on round Trip");
+		Thread.sleep(4000);
 		roundTrip.click();
+		
 		
 		System.out.println("entering from city");
 		this.fromCity.sendKeys(prop.getProperty("fromCity"));
 		
 		System.out.println("entering To city");
 		this.toCity.sendKeys(prop.getProperty("toCity"));
+		toCity.sendKeys(Keys.TAB,Keys.ENTER);
 	}
 
-	public void userEntersDetails() {
+	public void userEntersDetails() throws ParseException {
 		System.out.println("enetering depart date");
-		DepartDate.click();
-		
 		System.out.println("selecting todays date");
-		todayDate.click();
-		
-		SimpleDateFormat sf= new SimpleDateFormat("dd/MM/yyyy");
+		System.out.println("antering date after 10 days");
+		DateFormat sf= new SimpleDateFormat("dd/MM/yyyy");
 		Calendar c= Calendar.getInstance();
 		
 		c.setTime(new Date());
 		c.add(Calendar.DATE, 10);
-		String obtainDate = c.getTime().toString();
+		Date date= c.getTime();
+		String rDate= sf.format(date);
+		System.out.println("obtained date after 10 days is:"+ rDate);
 		
-		System.out.println("sending return dae after 10 days");
-		returnDate.sendKeys(obtainDate);
+		System.out.println("sending return date after 10 days");
+		returnDate.clear();
+		returnDate.sendKeys(rDate,Keys.TAB);
 	}
 
-	public void searchFlights() {
-		System.out.println("clicking on serach button");
-		this.continueSearch.click();
-		
+	public void searchFlights() throws InterruptedException {
+		Thread.sleep(4000);
+		System.out.println("clicking on search");
+		continueSearch.click();
+		this.tearDown();
 	}
 	
 	
