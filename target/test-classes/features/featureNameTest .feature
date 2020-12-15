@@ -3,8 +3,11 @@ Feature: Login Feature
   
 @uat
 Scenario: Check that main elements on Google Homepage are displayed
-Given I launch Chrome browser
-Given I open Google Homepage
+Given user launch Chrome browser
+And user access cleartrip page
+When user seraches for flights
+And user enters journey details
+Then user continues with flight search
 
 
 
