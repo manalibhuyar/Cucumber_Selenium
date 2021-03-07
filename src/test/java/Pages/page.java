@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,8 +20,8 @@ public class page {
 	public static Properties prop;
 	public static Actions action;
 	public static JavascriptExecutor jsx;
-	
-
+	public static WebDriverWait wait;
+	public static Logger Log;
 	
 	public page()
 	{
@@ -37,6 +39,8 @@ public class page {
 		{
 			e.printStackTrace();
 		}
+		Log= Logger.getLogger(Log.class.getName());
+		
 	}
 	
 	
@@ -45,7 +49,7 @@ public class page {
 		jsx= (JavascriptExecutor) driver;  
 		
 		String browserName= prop.getProperty("browser");
-		System.out.println(browserName);
+		Log.info(browserName);
 		
 		if(browserName.equals("chrome"))
 		{
@@ -58,15 +62,16 @@ public class page {
 			driver= new FirefoxDriver();
 		}
 		
-		
 			
-//		driver.manage().window().maximize();
+		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
 		
-		driver.get(prop.getProperty("url"));
+		driver.get(prop.getProperty("peperfryLoginUrl"));
 		
-		
+		wait = new WebDriverWait(driver, 10);
+		action= new Actions(driver);
+		PropertyConfigurator.configure("resources.log4j.properties");
 	}
 		public void tearDown()
 		{

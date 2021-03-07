@@ -6,6 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import Pages.HomePage;
+import Pages.Peperfry_Page;
 import Pages.page;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -15,12 +16,9 @@ public class HomePageSteps extends page {
 
 	static HomePage homepage= new HomePage();
 	
-	
 	@When ("^user launch Chrome browser$")
 	public void user_opens_browser() {
-		
 		page.initialization();
-		
 	} 
 	
 	@Given("^user access cleartrip page$")
