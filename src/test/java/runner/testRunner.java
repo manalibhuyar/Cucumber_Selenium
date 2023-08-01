@@ -6,10 +6,9 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-features = "src/test/java/features"
-,glue= {"stepDefination"}
-)
+features = "src\\test\\java\\BitGo.feature"
+,glue= {"stepDefination"})
 
-public class testrunner {
+public class testRunner {
 
 }
