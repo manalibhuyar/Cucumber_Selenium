@@ -16,7 +16,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class page {
 	public static WebDriver driver;
 	public static Properties prop;
-	public static Actions action;
 	public static JavascriptExecutor jsx;
 	
 
@@ -45,7 +44,7 @@ public class page {
 		jsx= (JavascriptExecutor) driver;  
 		
 		String browserName= prop.getProperty("browser");
-		System.out.println(browserName);
+		System.out.println("browserName >>"+browserName);
 		
 		if(browserName.equals("chrome"))
 		{
@@ -57,10 +56,8 @@ public class page {
 			System.setProperty("webdriver.gecko.driver","web-drivers/FF");
 			driver= new FirefoxDriver();
 		}
-		
-		
-			
-//		driver.manage().window().maximize();
+
+		driver.manage().window().maximize();
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().implicitlyWait(60,TimeUnit.SECONDS);
 		

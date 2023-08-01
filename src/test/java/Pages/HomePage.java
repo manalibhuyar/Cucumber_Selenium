@@ -5,16 +5,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Keyboard;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static java.lang.String.format;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class HomePage extends page {
 	
@@ -39,6 +39,11 @@ public class HomePage extends page {
 
 	@FindBy(id="SearchBtn")
 	private WebElement continueSearch;
+
+	@FindBy(xpath = "//div[@class='transactions']/h3")
+	private WebElement headerMsg;
+
+	String transactions = "//div[@class='transactions']/div[%s]";
 	
 	
 	
@@ -46,8 +51,8 @@ public class HomePage extends page {
 		Thread.sleep(4000);
 		System.out.println("home page constructor called");
 		PageFactory.initElements(driver, this);
-		Assert.assertTrue("user not landed on clear trip page", driver.getTitle().contains("Booking"));
-		
+		assertTrue( driver.getTitle().contains("Booking"),"user not landed on clear trip page");
+
 	}
 
 	public void userSearchesFlights() throws InterruptedException {
@@ -88,9 +93,22 @@ public class HomePage extends page {
 		continueSearch.click();
 		this.tearDown();
 	}
-	
-	
-	
-	
-	
+	public void validateBlockStreamPage() {
+		Assert.assertTrue(driver.getTitle().contains("blockstream.info"));
+	}
+
+	public void validateHeading(String msg) {
+		Assert.assertTrue(headerMsg.getText().equalsIgnoreCase(msg));
+	}
+
+	public void printHashcodeOfTransaction() {
+		int n= driver.findElements(By.xpath(transactions)).size();
+		for(int i=0; i<n ; i++ ){
+			if(driver.findElements(By.xpath(format (transactions,i)+"/div[@class='vins']/div[@class='vin']")).size() ==1 ){
+					if(driver.findElements(By.xpath(format (transactions,i)+"/div[@class='vouts']/div)")).size() ==2){
+						System.out.println(driver.findElement(By.xpath(format (transactions,i)+"//div[@class='txn']/a")).getText());
+				}
+			}
+		}
+	}
 }

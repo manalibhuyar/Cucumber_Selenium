@@ -1,15 +1,12 @@
 package stepDefination;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import io.cucumber.java.en.And;
 
 import Pages.HomePage;
 import Pages.page;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.Then;
 
 public class HomePageSteps extends page {
 
@@ -43,4 +40,18 @@ public class HomePageSteps extends page {
 	}
 
 
+	@And("user lands on blockstream page")
+	public void userLandsOnBlockstreamPage() {
+		homepage.validateBlockStreamPage();
+	}
+
+	@Then("user validates section has heading {string}")
+		public void userValidatesSectionHasHeading(String msg) {
+		homepage.validateHeading(msg);
+	}
+
+	@Then("user prints transaction for one input and two output")
+	public void userPrintsTransactionForOneInputAndTwoOutput() {
+		homepage.printHashcodeOfTransaction();
+	}
 }
